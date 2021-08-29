@@ -29,7 +29,7 @@ class PSSH:
             self.proxies = {'http': proxy_url, 'https': proxy_url}
 
     def read_from_file(self, file_path: str):
-        raw = Path(file_path).read_bytes()
+        raw = open(file_path).read(8192)
         offset = raw.rfind(b'pssh')
         return raw[offset - 4:offset - 4 + raw[offset - 1]]
 
@@ -136,7 +136,9 @@ def main(args: CmdArgs):
     keys = wvdecrypt.start_process()
 
     for k in keys:
-        print(k)
+        if k.type == 'CONTENT':
+            print('{}:{}'.format(k.kid.hex(), k.key.hex()))
+    
 
 
 if __name__ == '__main__':
