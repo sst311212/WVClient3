@@ -7,6 +7,7 @@ from argparse import ArgumentParser
 from urllib.request import getproxies
 from pywidevine.decrypt.wvdecrypt import WvDecrypt
 
+
 USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36'
 
 
@@ -29,7 +30,7 @@ class PSSH:
             self.proxies = {'http': proxy_url, 'https': proxy_url}
 
     def read_from_file(self, file_path: str):
-        raw = open(file_path).read(8192)
+        raw = open(file_path, 'rb').read(4096)
         offset = raw.rfind(b'pssh')
         return raw[offset - 4:offset - 4 + raw[offset - 1]]
 
@@ -135,10 +136,10 @@ def main(args: CmdArgs):
     wvdecrypt.update_license(base64.b64encode(license))
     keys = wvdecrypt.start_process()
 
-    for k in keys:
-        if k.type == 'CONTENT':
-            print('{}:{}'.format(k.kid.hex(), k.key.hex()))
-    
+    for key in keys:
+        if key.type == 'CONTENT':
+            cmdline = '{}:{}'.format(key.kid.hex(), key.key.hex())
+            print(cmdline)
 
 
 if __name__ == '__main__':
