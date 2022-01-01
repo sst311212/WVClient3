@@ -1,9 +1,8 @@
-import base64
 import logging
+import base64
 from pywidevine.cdm import cdm, deviceconfig
 
-
-class WvDecrypt:
+class WvDecrypt(object):
 
     WV_SYSTEM_ID = [237, 239, 139, 169, 121, 214, 74, 206, 163, 200, 39, 220, 213, 29, 33, 237]
 
@@ -28,14 +27,14 @@ class WvDecrypt:
             else:
                 return pssh_b64
 
-        self.session = self.cdm.open_session(check_pssh(self.pssh), deviceconfig.DeviceConfig(deviceconfig.device_chromecdm_2209))
+        self.session = self.cdm.open_session(check_pssh(self.pssh), deviceconfig.DeviceConfig(deviceconfig.device_android_generic))
 
     def start_process(self):
         keysR = self.cdm.get_keys(self.session)
         return keysR
 
-    def set_certificate(self, cert):
-        self.cdm.set_service_certificate(self.session, cert)
+    def set_certificate(self,cert):
+        self.cdm.set_service_certificate(self.session,cert)
         return True
 
     def get_challenge(self):
