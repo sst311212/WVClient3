@@ -1,29 +1,18 @@
 import os
 
-device_nvidiashield_lvl1 = {
-    'name': 'nvidiashield_lvl1',
-    'description': 'nvidashield firmware 7.2.3 lvl1 security level',
-    'security_level': 1,
+device_android_generic = {
+    'name': 'android_generic',
+    'description': 'android widevine l3',
+    'security_level': 3,
     'session_id_type': 'android',
     'private_key_available': True,
     'vmp': False,
     'send_key_control_nonce': True
 }
 
-device_chromecdm_2209 = {
-    'name': 'chromecdm_2209',
-    'description': 'chrome cdm windows 2209',
-    'security_level': 3,
-    'session_id_type': 'chrome',
-    'private_key_available': False,
-    'vmp': True,
-    'send_key_control_nonce': False
-}
-
-devices_available = [device_chromecdm_2209]
+devices_available = [device_android_generic]
 
 FILES_FOLDER = 'devices'
-
 
 class DeviceConfig:
     def __init__(self, device):
